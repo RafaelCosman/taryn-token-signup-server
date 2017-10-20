@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "main": "app.js",
+  "scripts":{
+    "start": "node app.js"
+  },
   "dependencies": {
     "apollo-server-express": "^1.1.7",
     "body-parser": "^1.18.2",
