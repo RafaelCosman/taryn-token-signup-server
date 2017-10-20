@@ -14,5 +14,5 @@ app.use('/graphiql', graphiqlExpress({
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 
-const PORT = 3000
-app.listen(PORT, () => {});
+// const PORT = 3000
+app.listen(process.env.PORT, () => {});
