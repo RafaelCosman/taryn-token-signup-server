@@ -1,3 +1,5 @@
+const sendTokens = require('./sendTokens');
+
 const links = [
   {
     id: 1,
@@ -20,6 +22,9 @@ module.exports = {
       const newLink = Object.assign({id: links.length + 1}, data);
       links.push(newLink);
       return newLink;
+    },
+    sendTokens: (_, data) => {
+      return sendTokens(data)
     }
   },
 };

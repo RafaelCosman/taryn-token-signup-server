@@ -8,11 +8,15 @@ const typeDefs = `
     url: String!
     description: String!
   }
+  type Transaction {
+    id: ID!
+  }
   type Query {
     allLinks: [Link!]!
   }
   type Mutation {
     createLink(url: String!, description: String!): Link
+    sendTokens(address: String!, amount: Int!): Transaction 
   }
 `;
 
