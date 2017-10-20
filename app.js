@@ -1,137 +1,71 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var graphql = require('graphql');
-var graphqlHTTP = require('express-graphql');
+const express = require('express');
 
-var GraphQLSchema = graphql.GraphQLSchema;
-var GraphQLObjectType = graphql.GraphQLObjectType;
-var GraphQLString = graphql.GraphQLString;
-var GraphQLInt = graphql.GraphQLInt;
+const TruffleContract = require('truffle-contract')
 
+const _Token = require("./src/Token.json");
 
-var goldbergs = {
-  1: {
-    character: "Beverly Goldberg",
-    actor: "Wendi McLendon-Covey",
-    role: "matriarch",
-    traits: "embarrasing, overprotective",
-    id: 1
-  },
-  2: {
-    character: "Murray Goldberg",
-    actor: "Jeff Garlin",
-    role: "patriarch",
-    traits: "gruff, lazy",
-    id: 2
-  },
-  3: {
-    character: "Erica Goldberg",
-    actor: "Hayley Orrantia",
-    role: "oldest child",
-    traits: "rebellious, nonchalant",
-    id: 3
-  },
-  4: {
-    character: "Barry Goldberg",
-    actor: "Troy Gentile",
-    role: "middle child",
-    traits: "dim-witted, untalented",
-    id: 4
-  },
-  5: {
-    character: "Adam Goldberg",
-    actor: "Sean Giambrone",
-    role: "youngest child",
-    traits: "geeky, pop-culture obsessed",
-    id: 5
-  },
-  6: {
-    character: "Albert 'Pops' Solomon",
-    actor: "George Segal",
-    role: "grandfather",
-    traits: "goofy, laid back",
-    id: 6
-  }
-}
+// This package automatically parses JSON requests.
+const bodyParser = require('body-parser');
 
-function getGoldberg(id) {
-  return goldbergs[id]
-}
+// This package will handle GraphQL server requests and responses
+// for you, based on your schema.
+// const {graphqlExpress} = require('apollo-server-express');
+const {graphqlExpress, graphiqlExpress} = require('apollo-server-express');
 
-var goldbergType = new GraphQLObjectType({
-  name: 'Goldberg',
-  description: "Member of The Goldbergs",
-  fields: {
-    character: {
-      type: GraphQLString,
-      description: "Name of the character",
-    },
-    actor: {
-      type: GraphQLString,
-      description: "Actor playing the character",
-    },
-    role: {
-      type: GraphQLString,
-      description: "Family role"
-    },
-    traits: {
-      type: GraphQLString,
-      description: "Traits this Goldberg is known for"
-    },
-    id: {
-      type: GraphQLInt,
-      description: "ID of this Goldberg",
-    }
-  }
-});
+const schema = require('./src/schema');
+const Token = require("./src/tt.js");
 
-var queryType = new GraphQLObjectType({
-  name: 'query',
-  description: "Goldberg query",
-  fields: {
-    goldberg: {
-      type: goldbergType,
-      args: {
-        id: {
-          type: GraphQLInt
-        }
-      },
-      resolve: function(_, args){
-        return getGoldberg(args.id)
-      }
-    }
-  }
-});
+const Web3 = require('web3');
+
+// const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+// const provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io:dYWKKqsJkbv9cZlQFEpI')
+const provider = new Web3.providers.HttpProvider("http://localhost:8545")
+const web3 = new Web3(provider)
 
 
+// const address = "0xE3Dd478029184dCA93A596834a06c775361dF13c";
+// console.log(web3.eth.getBalance(address))
+ 
 
-
-var schema = new GraphQLSchema({
-  query: queryType
-});
 var app = express();
-app.use('/', graphqlHTTP({ schema: schema, graphiql: true }));
+// app.use('/graphql', bodyParser.json(), graphqlExpress({schema}));
+app.use('/graphiql', graphiqlExpress({
+  endpointURL: '/graphql',
+}));
 
-// view engine setup
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+const TokenContract = TruffleContract(_Token)
+TokenContract.setProvider(provider)
+// const foo = TokenContract.at("0x30947cd58dcb06bd5b573fe4442d02af4116f822");
+
+// const privateKey = '0x62543b4c00ede77bd7913dafbd7a1bf1b3f5ba7f155129170cebe9f52a0911d1';
+// debugger;
+// web3.eth.accounts.privateKeyToAccount();
+
+const PORT = 3000
+app.listen(PORT, () => {
+  web3.eth.getAccounts((error, accounts) => {
+    const abi = _Token["abi"]
+    const foo = web3.eth.contract("0xE3Dd478029184dCA93A596834a06c775361dF13c", abi)
+    debugger;
+    // const m = new Token(web3.currentProvider, accounts[0])
+    // m.at("0xE3Dd478029184dCA93A596834a06c775361dF13c")
+    // m.at("0x89a0e882a865aade116f2cd022103948e0163742")
+    // m.instance.sendCoin(accounts[1], 100, {from: accounts[0]})
+    // m.instance.getBalance.call(accounts[0]).then(e => {console.log(e)});
+    // m.instance.getBalance.call(accounts[1]).then(e => {console.log(e)});
+    m.instance.foo()
+      .then( i => {
+        console.log(i)
+      })
+      .catch( e => console.log("OHNO", e))
+    // m.deployed()
+    //   .then( i => {
+    //     console.log("YAY", i)
+    //   })
+      // .catch( e => console.log("OHNO", e))
+    3
+  })
 });
-
-module.exports = app;
