@@ -3,19 +3,23 @@ const resolvers = require('./resolvers');
 
 // Define your types here.
 const typeDefs = `
-  type Link {
-    id: ID!
-    url: String!
-    description: String!
-  }
   type Transaction {
     id: ID!
   }
+  type User {
+    id: ID! 
+    email: String!
+    confirmationToken: String
+    hasConfirmedEmail: Boolean
+    ethereumAddress: String!
+    tokenCount: Int!
+    friendsReferred: [User!]!
+    referrer: User
+  }
   type Query {
-    allLinks: [Link!]!
+    user(id: ID): User
   }
   type Mutation {
-    createLink(url: String!, description: String!): Link
     sendTokens(address: String!, amount: Int!): Transaction 
   }
 `;

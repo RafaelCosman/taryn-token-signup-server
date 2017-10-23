@@ -1,28 +1,31 @@
 const sendTokens = require('./sendTokens');
+// const ApolloClient = require("apollo-client");
+// const createNetworkInterface = require("apollo-client").createNetworkInterface;
+// const networkInterface = createNetworkInterface({ uri: "https://api.graph.cool/simple/v1/cj8m6ujrq0evm0167mhdi4mta" });
+const gql = require('graphql-tag');
 
-const links = [
-  {
-    id: 1,
-    url: 'http://graphql.org/',
-    description: 'The Best Query Language'
-  },
-  {
-    id: 2,
-    url: 'http://dev.apollodata.com',
-    description: 'Awesome GraphQL Client'
-  },
-];
+// const client = new ApolloClient({
+//   networkInterface,
+// });
 
 module.exports = {
   Query: {
-    allLinks: () => links,
+    user: (_, data) => {
+      // client.query({
+      //   query: gql`
+      //     query {
+      //       User(id:"cj94ks85w05fg0156ctn0bxkw"){
+      //         id
+      //       }
+      //     }
+      //   `
+      // })
+      // .then(data => console.log(data))
+      // .catch(error => console.error(error));
+      return {id: 344}
+    }
   },
   Mutation: {
-    createLink: (_, data) => {
-      const newLink = Object.assign({id: links.length + 1}, data);
-      links.push(newLink);
-      return newLink;
-    },
     sendTokens: (_, data) => {
       return sendTokens(data)
     }
