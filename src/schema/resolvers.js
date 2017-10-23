@@ -6,13 +6,15 @@ var client = require('graphql-client')({
   }
 })
 
+import confirmUser from "./confirmUser";
+
 module.exports = {
   Query: {
     user: (_, data) => {
       return client.query(
         `
           query {
-            User(id:"cj94ks85w05fg0156ctn0bxkw"){
+            User(id:"${data.id}"){
               id
               createdAt
             }
@@ -20,12 +22,16 @@ module.exports = {
         `
       )
       .then(data => {return(data.data.User)})
-      .catch(error => console.error("AAARRRRGGG", error));
+      .catch(error => {return({errors: error})});
     }
   },
   Mutation: {
     sendTokens: (_, data) => {
       return sendTokens(data)
+    },
+    confirmUser: (_, data) => {
+      const {confirmationToken} = data;
+      return confirmUser(data)
     }
   },
 };

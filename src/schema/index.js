@@ -19,8 +19,14 @@ const typeDefs = `
   type Query {
     user(id: ID): User
   }
+  type ConfirmEmailPayload {
+    id: ID!
+    ethereumAddress: String
+    email: String
+  }
   type Mutation {
     sendTokens(address: String!, amount: Int!): Transaction 
+    confirmUser(confirmationToken: String!): ConfirmEmailPayload 
   }
 `;
 
