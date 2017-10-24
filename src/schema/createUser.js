@@ -1,3 +1,5 @@
+const db = require("../models/index")
+
 var client = require('graphql-client')({
   url: "https://api.graph.cool/simple/v1/cj8m6ujrq0evm0167mhdi4mta",
   headers: {
@@ -33,12 +35,17 @@ const _createUser = (user) => {
 
 const createUser = (user) => {
 	return new Promise((resolve, reject) => {
-		_createUser(user)
-		.then((u) => {
-            console.log("CREATING USER", u)
-			resolve(u)
-		})
-        .catch((c) => { reject(c)})
+        db.User.create(user)
+        .then(u => {
+            console.log(u.dataValues)
+            resolve(u.dataValues)
+        })
+		// _createUser(user)
+		// .then((u) => {
+        //     console.log("CREATING USER", u)
+		// 	resolve(u)
+		// })
+        // .catch((c) => { reject(c)})
 	})
 }
 

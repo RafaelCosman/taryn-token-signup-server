@@ -5,7 +5,10 @@
   "main": "app.js",
   "scripts": {
     "start": "babel-node app.js",
-    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files"
+    "inspect": "babel-node app.js --inspect-brk",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "db:create": "node_modules/.bin/create_database",
+    "db:drop": "node_modules/.bin/drop_database"
   },
   "dependencies": {
     "apollo-client": "^1.9.3",
@@ -14,6 +17,7 @@
     "body-parser": "^1.18.2",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
+    "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "es6-promise": "^4.1.1",
     "express": "^4.16.2",
@@ -24,6 +28,11 @@
     "graphql-tools": "^2.5.1",
     "isomorphic-fetch": "^2.2.1",
     "morgan": "~1.9.0",
+    "pg": "^7.3.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.17.0",
+    "sequelize-cli": "^3.0.0",
+    "sequelize-migration-pg-extras": "^1.0.1",
     "web3": "1.0.0-beta.24"
   },
   "engines": {
