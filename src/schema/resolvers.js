@@ -30,7 +30,7 @@ module.exports = {
     sendTokens: (_, data) => {
       return sendTokens(data)
     },
-    confirmUser: (_, data) => {
+    confirmEmail: (_, data) => {
       return confirmUser(data)
     },
     createUser: (_, data) => {

@@ -31,7 +31,7 @@ const typeDefs = `
   }
   type Mutation {
     sendTokens(address: String!, amount: Int!): Transaction 
-    confirmUser(confirmationToken: String!): ConfirmEmailPayload 
+    confirmEmail(confirmationToken: String!): ConfirmEmailPayload 
     createUser(email: String!, ethereumAddress: String!, referrerId: ID): CreateUserPayload
   }
 `;

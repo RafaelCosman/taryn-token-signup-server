@@ -46,7 +46,7 @@ const sendConfirmation = (user) => {
         id
       }
 		`
-	if (user.referrer.id) { mutation += secondaryMutation(user) }
+	if (!!user.referrer && !!user.referrer.id) {mutation += secondaryMutation(user) }
 	return client.query(
 		`mutation {${mutation}}`
 	)
@@ -65,8 +65,8 @@ const confirmUser = (user) => {
 		.then((u) => {
 			return sendConfirmation(u)
 		})
-		.then((user) => {
-			resolve(user)
+		.then((u) => {
+			resolve(u)
 		})
 	})
 }
