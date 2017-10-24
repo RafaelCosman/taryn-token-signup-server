@@ -9,7 +9,6 @@ var cors = require('cors');
 const schema = require('./src/schema');
 var app = express();
 
-
 app.use(cors())
 app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
@@ -17,6 +16,5 @@ app.use('/graphiql', graphiqlExpress({
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 
-// const PORT = 3000
-app.listen(process.env.PORT, () => {});
 
+app.listen(process.env.PORT, () => {});

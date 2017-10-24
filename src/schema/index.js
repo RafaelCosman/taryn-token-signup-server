@@ -16,8 +16,14 @@ const typeDefs = `
     friendsReferred: [User!]!
     referrer: User
   }
+  type TokenGift {
+    id: ID! 
+    transactionHash: String
+    isForReferral: Boolean
+  }
   type Query {
     user(id: ID): User
+    tokenGift(id: ID): TokenGift
   }
   type ConfirmEmailPayload {
     id: ID!
@@ -33,6 +39,7 @@ const typeDefs = `
     sendTokens(address: String!, amount: Int!): Transaction 
     confirmEmail(confirmationToken: String!): ConfirmEmailPayload 
     createUser(email: String!, ethereumAddress: String!, referrerId: ID): CreateUserPayload
+    createTokenGift: TokenGift
   }
 `;
 
