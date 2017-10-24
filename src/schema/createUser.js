@@ -5,17 +5,23 @@ var client = require('graphql-client')({
 })
 
 const _createUser = (user) => {
-    const query = 
+    let mutation
+    if (user.referrerId) {
+        mutation = `createUser(email: "${user.email}", ethereumAddress: "${user.ethereumAddress}", referrerId: "${user.referrerId}")`
+    } else {
+        mutation = `createUser(email: "${user.email}", ethereumAddress: "${user.ethereumAddress}")`
+    }
+    const fullMutation = 
 		`
-        mutation {
-            createUser(email: "${user.email}", ethereumAddress: "${user.ethereumAddress}") {
+        mutation {${mutation}{
                 id
                 email
                 ethereumAddress 
             }
 
         }
-    `
+    `;
+	return client.query(fullMutation)
 	.then(function (userQueryResult) {
       if (userQueryResult.error) {
         return Promise.reject(userQueryResult.data.errors)
@@ -29,6 +35,7 @@ const createUser = (user) => {
 	return new Promise((resolve, reject) => {
 		_createUser(user)
 		.then((u) => {
+            console.log("CREATING USER", u)
 			resolve(u)
 		})
         .catch((c) => { reject(c)})
