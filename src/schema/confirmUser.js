@@ -7,14 +7,14 @@ var client = require('graphql-client')({
 const getUser = (user) => {
 	return client.query(
 		`query {
-				User(confirmationToken: "${user.confirmationToken}") {
+			User(confirmationToken: "${user.confirmationToken}") {
 				id
 				ethereumAddress
 				email
 				referrer {
-						id		
+					id		
 				}
-				}
+			}
 		}`
 	)
 	.then(function (userQueryResult) {

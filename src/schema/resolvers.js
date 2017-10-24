@@ -7,6 +7,7 @@ var client = require('graphql-client')({
 })
 
 import confirmUser from "./confirmUser";
+import createUser from "./createUser";
 
 module.exports = {
   Query: {
@@ -31,6 +32,9 @@ module.exports = {
     },
     confirmUser: (_, data) => {
       return confirmUser(data)
+    },
+    createUser: (_, data) => {
+      return createUser(data)
     }
   },
 };

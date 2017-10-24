@@ -24,9 +24,15 @@ const typeDefs = `
     ethereumAddress: String
     email: String
   }
+  type CreateUserPayload {
+    id: ID!
+    email: String
+    ethereumAddress: String
+  }
   type Mutation {
     sendTokens(address: String!, amount: Int!): Transaction 
     confirmUser(confirmationToken: String!): ConfirmEmailPayload 
+    createUser(email: String!, ethereumAddress: String!, refererId: ID): CreateUserPayload
   }
 `;
 
