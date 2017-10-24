@@ -1,11 +1,8 @@
-const {makeExecutableSchema} = require('graphql-tools');
-const resolvers = require('./resolvers');
+const { makeExecutableSchema } = require('graphql-tools');
+import { resolvers } from "../resolvers";
 
-// Define your types here.
+// Define types
 const typeDefs = `
-  type Transaction {
-    id: ID!
-  }
   type User {
     id: ID! 
     email: String!
@@ -21,10 +18,16 @@ const typeDefs = `
     transactionHash: String
     isForReferral: Boolean
   }
-  type Query {
-    user(id: ID): User
-    tokenGift(id: ID): TokenGift
+  type TokenCountPayload {
+    count: Int!
   }
+
+  type Query {
+    User(id: ID): User
+    TokenGift(id: ID): TokenGift
+    tokenCount: TokenCountPayload
+  }
+
   type ConfirmEmailPayload {
     id: ID!
     ethereumAddress: String
@@ -35,13 +38,17 @@ const typeDefs = `
     email: String
     ethereumAddress: String
   }
+  type Transaction {
+    id: ID!
+  }
+
   type Mutation {
     sendTokens(address: String!, amount: Int!): Transaction 
-    confirmEmail(confirmationToken: String!): ConfirmEmailPayload 
+    confirmEmail(confirmationToken: String!): User
     createUser(email: String!, ethereumAddress: String!, referrerId: ID): CreateUserPayload
     createTokenGift: TokenGift
   }
 `;
 
 // Generate the schema object from your types definition.
-module.exports = makeExecutableSchema({typeDefs, resolvers});
+module.exports = makeExecutableSchema({ typeDefs, resolvers });

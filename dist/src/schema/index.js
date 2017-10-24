@@ -1,7 +1,6 @@
 'use strict';
 
-var _require = require('graphql-tools'),
-    makeExecutableSchema = _require.makeExecutableSchema;
+var _require = require('graphql-tools'), makeExecutableSchema = _require.makeExecutableSchema;
 
 var resolvers = require('./resolvers');
 

@@ -4,11 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     transactionHash: DataTypes.STRING,
     isForReferral: DataTypes.BOOLEAN
   }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
+      classMethods: {
+        associate: function (models) {
+          // associations can be defined here
+        }
       }
-    }
-  });
+    });
   return TokenGift;
 };
