@@ -26,21 +26,29 @@ const getUser = (user) => {
     })
 }
 
+const secondaryMutation = (user) => (
+		`
+      secondaryGift:createTokenGift(userId:"${user.referrer.id}", forReferral: true){
+        id
+      }
+		`
+)
+
 const sendConfirmation = (user) => {
-	return client.query(
-		`mutation {
+	let mutation =
+		`
       updateUser(id: "${user.id}", hasConfirmedEmail: true, confirmationToken: null) {
         id
         ethereumAddress
         email
       }
-      foo:createTokenGift(userId:"${user.id}", forReferral: false){
+      primaryGift:createTokenGift(userId:"${user.id}", forReferral: false){
         id
       }
-      bar:createTokenGift(userId:"${user.id}", forReferral: false){
-        id
-      }
-		}`
+		`
+	if (user.referrer.id) { mutation += secondaryMutation(user) }
+	return client.query(
+		`mutation {${mutation}}`
 	)
 	.then(function (userQueryResult) {
 		if (userQueryResult.error) {

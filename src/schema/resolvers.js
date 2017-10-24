@@ -30,7 +30,6 @@ module.exports = {
       return sendTokens(data)
     },
     confirmUser: (_, data) => {
-      const {confirmationToken} = data;
       return confirmUser(data)
     }
   },
