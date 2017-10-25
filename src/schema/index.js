@@ -25,6 +25,7 @@ const typeDefs = `
   type Query {
     User(id: ID): User
     TokenGift(id: ID): TokenGift
+    allTokenGifts: [TokenGift]
     tokenCount: TokenCountPayload
   }
 
@@ -47,6 +48,7 @@ const typeDefs = `
     confirmEmail(confirmationToken: String!): User
     createUser(email: String!, ethereumAddress: String!, referrerId: ID): CreateUserPayload
     createTokenGift: TokenGift
+    payoutTokenGift(id: String!): TokenGift
   }
 `;
 

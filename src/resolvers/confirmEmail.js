@@ -4,21 +4,16 @@ const getUserByConfirmationToken = (confirmationToken) => {
   return db.User.findOne({
     where: { confirmationToken }
   })
-    .then(user => user)
 }
 
 const confirmEmail = (confirmationToken) => {
   return new Promise((resolve, reject) => {
+    let user;
     getUserByConfirmationToken(confirmationToken)
-      .then(user => user.update({ hasConfirmedEmail: true, confirmationToken: null }))
-      .then(user => resolve(user))
-      .then(user => {
-        return db.TokenGift.create({});
-      })
-      .catch(error => {
-        console.error(error);
-        reject("Invalid confirmation token.");
-      });
+      .then(u => { user = u; return u.createTokenGift() })
+      .then(tokenGift => user.update({ hasConfirmedEmail: true, confirmationToken: null }))
+      .then(tokenGift => { console.log(user.dataValues); resolve(user.dataValues) })
+      .catch(error => reject("Invalid confirmation token."))
   })
 }
 

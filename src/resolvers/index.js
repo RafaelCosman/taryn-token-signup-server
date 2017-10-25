@@ -9,6 +9,10 @@ const Query = {
       where: { id: data.id },
     });
   },
+  allTokenGifts: () => {
+    return db.TokenGift.findAll({})
+    .then(e => e.map(e => e.dataValues))
+  },
   TokenGift: (_, data) => {
     return db.TokenGift.findOne({
       where: { id: data.id }
@@ -34,8 +38,22 @@ const Mutation = {
   createUser: (_, data) => {
     return createUser(data)
   },
+  payoutTokenGift:(_, data) => {
+    let item;
+    return db.TokenGift.findOne({
+      where: { id: data.id }
+    })
+    .then((tokenGift) => {
+      item = tokenGift;
+      return sendTokens({address: "0xdf7850D6CC6AFF77E8AFC42Accdc34B82099CaCC", amount: 1})
+    })
+    .then((transaction) => {
+      item.update({transactionHash: transaction.id})
+      .then(t => {return item.dataValues})
+    })
+  },
   createTokenGift: () => {
-    return db.TokenGift.create({})
+    return db.TokenGift.create({userId: "dec0ef1c-2fb0-4d96-a98f-60d5e3fe7eaa"})
       .then(result => result.dataValues)
   }
 }
