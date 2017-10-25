@@ -8,7 +8,9 @@
     "inspect": "babel-node app.js --inspect-brk",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "db:create": "node_modules/.bin/create_database",
-    "db:drop": "node_modules/.bin/drop_database"
+    "db:drop": "node_modules/.bin/drop_database",
+    "db:migrate": "node_modules/.bin/sequelize db:migrate",
+    "db:reset": "npm run db:drop; npm run db:create; npm run db:migrate"
   },
   "dependencies": {
     "apollo-client": "^1.9.3",
