@@ -3,6 +3,8 @@ const express = require('express');
 // This package automatically parses JSON requests.
 const bodyParser = require('body-parser');
 
+const dotenv = require('dotenv').config();
+
 const {graphqlExpress, graphiqlExpress} = require('apollo-server-express');
 
 var cors = require('cors');
@@ -15,6 +17,5 @@ app.use('/graphiql', graphiqlExpress({
 }));
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
-
 
 app.listen(process.env.PORT, () => {});

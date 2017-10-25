@@ -43,9 +43,9 @@ var Query = {
       return { errors: error };
     });
   },
-  tokenCount: async function tokenCount(_, data) {
+  tokenCount: function tokenCount(_, data) {
     return _index2.default.TokenGift.findAll({}).then(function (result) {
-      return { count: result };
+      return { count: result.length };
     });
   }
 };

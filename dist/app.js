@@ -5,6 +5,8 @@ var express = require('express');
 // This package automatically parses JSON requests.
 var bodyParser = require('body-parser');
 
+var dotenv = require('dotenv').config();
+
 var _require = require('apollo-server-express'),
     graphqlExpress = _require.graphqlExpress,
     graphiqlExpress = _require.graphiqlExpress;

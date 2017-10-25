@@ -1,13 +1,12 @@
 import db from "./index"
 const crypto = require('crypto')
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
-// TODO make this an env var
-const BASE_URL = "https://bookie-adherence-55816.netlify.com";
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendConfirmationEmail = (user) => {
   const subject = "Confirm your email and redeem your FreeToken"
-  const confirmationUrl = `${BASE_URL}/confirm/${user.confirmationToken}`
+  const confirmationUrl = `${process.env.CLIENT_URL}/confirm/${user.confirmationToken}`
   const body = `Click this link to confirm your email: ${confirmationUrl}`
 
   const message = {

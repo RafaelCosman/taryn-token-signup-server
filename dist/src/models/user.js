@@ -8,13 +8,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var crypto = require('crypto');
 var sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
-// TODO make this an env var
-var BASE_URL = "https://bookie-adherence-55816.netlify.com";
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 var sendConfirmationEmail = function sendConfirmationEmail(user) {
   var subject = "Confirm your email and redeem your FreeToken";
-  var confirmationUrl = BASE_URL + '/confirm/' + user.confirmationToken;
+  var confirmationUrl = process.env.CLIENT_URL + '/confirm/' + user.confirmationToken;
   var body = 'Click this link to confirm your email: ' + confirmationUrl;
 
   var message = {
