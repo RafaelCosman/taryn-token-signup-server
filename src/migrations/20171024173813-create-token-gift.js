@@ -4,9 +4,16 @@ module.exports = {
     return queryInterface.createTable('TokenGifts', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
+      },
+      userId: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: "Users",
+          key: "id"
+        }
       },
       transactionHash: {
         type: Sequelize.STRING

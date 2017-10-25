@@ -53,7 +53,7 @@ const Mutation = {
     })
   },
   createTokenGift: () => {
-    return db.TokenGift.create({})
+    return db.TokenGift.create({userId: "dec0ef1c-2fb0-4d96-a98f-60d5e3fe7eaa"})
       .then(result => result.dataValues)
   }
 }
