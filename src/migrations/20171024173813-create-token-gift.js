@@ -18,8 +18,11 @@ module.exports = {
       transactionHash: {
         type: Sequelize.STRING
       },
-      isForReferral: {
-        type: Sequelize.BOOLEAN
+      recipientId: {
+        type: Sequelize.INTEGER,
+      },
+      referrerId: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

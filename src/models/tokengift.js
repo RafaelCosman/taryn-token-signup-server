@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     transactionHash: DataTypes.STRING,
     isForReferral: DataTypes.BOOLEAN
   });
-  TokenGift.associate = function(models) {
-    TokenGift.belongsTo(models.User, {foreignKey: 'userId'})
+  TokenGift.associate = function (models) {
+    TokenGift.belongsTo(models.User, { foreignKey: 'userId' })
   }
   return TokenGift;
 };
