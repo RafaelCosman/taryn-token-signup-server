@@ -18,7 +18,6 @@ module.exports = function sendTokens(data) {
     const {address, amount} = data;
     return new Promise((resolve, reject) => {
         contract.methods.sendCoin(address, amount).send({from: account.address,  gas: 100000}).then(transaction => {
-            console.log('Transaction Initiated', transaction)
             resolve({id: transaction.transactionHash})
         })
         .catch(e => {console.log("Error", e)})

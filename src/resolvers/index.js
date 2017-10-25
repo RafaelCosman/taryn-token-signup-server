@@ -39,17 +39,23 @@ const Mutation = {
     return createUser(data)
   },
   payoutTokenGift:(_, data) => {
-    let item;
+    let item, _tokenGift, _user;
     return db.TokenGift.findOne({
       where: { id: data.id }
     })
     .then((tokenGift) => {
-      item = tokenGift;
-      return sendTokens({address: "0xdf7850D6CC6AFF77E8AFC42Accdc34B82099CaCC", amount: 1})
+      _tokenGift = tokenGift;
+      return tokenGift.getUser()
+    })
+    .then((user) => {
+      _user = user;
+      return sendTokens({address: user.dataValues.ethereumAddress, amount: 1})
     })
     .then((transaction) => {
-      item.update({transactionHash: transaction.id})
-      .then(t => {return item.dataValues})
+      return _tokenGift.update({transactionHash: transaction.id})
+    })
+    .then((t) => {
+      return _tokenGift.dataValues
     })
   },
   createTokenGift: () => {

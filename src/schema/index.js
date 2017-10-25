@@ -13,11 +13,13 @@ const typeDefs = `
     friendsReferred: [User!]!
     referrer: User
   }
+
   type TokenGift {
     id: ID! 
     transactionHash: String
     isForReferral: Boolean
   }
+
   type TokenCountPayload {
     count: Int!
   }
@@ -34,11 +36,13 @@ const typeDefs = `
     ethereumAddress: String
     email: String
   }
+
   type CreateUserPayload {
     id: ID!
     email: String
     ethereumAddress: String
   }
+
   type Transaction {
     id: ID!
   }
