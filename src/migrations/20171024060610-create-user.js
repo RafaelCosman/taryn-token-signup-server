@@ -9,16 +9,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
       },
       confirmationToken: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
       },
       hasConfirmedEmail: {
         type: Sequelize.BOOLEAN
       },
       ethereumAddress: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
       },
       createdAt: {
         allowNull: false,

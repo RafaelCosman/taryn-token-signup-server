@@ -1,8 +1,8 @@
 const db = require("../models/index")
 
-const getUserByConfirmationToken = (user) => {
+const getUserByConfirmationToken = (confirmationToken) => {
   return db.User.findOne({
-    where: { confirmationToken: user.confirmationToken }
+    where: { confirmationToken }
   })
     .then(user => user)
 }
@@ -12,7 +12,13 @@ const confirmEmail = (confirmationToken) => {
     getUserByConfirmationToken(confirmationToken)
       .then(user => user.update({ hasConfirmedEmail: true, confirmationToken: null }))
       .then(user => resolve(user))
-      .catch(error => reject("Invalid confirmation token."))
+      .then(user => {
+        return db.TokenGift.create({});
+      })
+      .catch(error => {
+        console.error(error);
+        reject("Invalid confirmation token.");
+      });
   })
 }
 

@@ -1,8 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var TokenGift = sequelize.define('TokenGift', {
+    referrerId: DataTypes.INTEGER,
+    recipientId: DataTypes.INTEGER,
     transactionHash: DataTypes.STRING,
-    isForReferral: DataTypes.BOOLEAN
   }, {
       classMethods: {
         associate: function (models) {
