@@ -34,7 +34,8 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.17.0",
     "sequelize-cli": "^3.0.0",
-    "sequelize-migration-pg-extras": "^1.0.1"
+    "sequelize-migration-pg-extras": "^1.0.1",
+    "web3": "^1.0.0-beta.24"
   },
   "engines": {
     "node": "8.1.2"
