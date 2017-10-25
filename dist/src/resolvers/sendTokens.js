@@ -1,3 +1,5 @@
+"use strict";
+
 // const Web3 = require('web3');
 // const _Token = require("../Token.json");
 
@@ -22,4 +24,4 @@ module.exports = function sendTokens(data) {
     //     })
     //     .catch(e => {console.log("Error", e)})
     // }) 
-}
+};
