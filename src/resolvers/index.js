@@ -22,9 +22,9 @@ const Query = {
       })
       .catch(error => { return ({ errors: error }) });
   },
-  tokenCount: async (_, data) => {
+  tokenCount: (_, data) => {
     return db.TokenGift.findAll({})
-      .then(result => ({ count: result }))
+      .then(result => {return { count: result.length }})
   },
 };
 
