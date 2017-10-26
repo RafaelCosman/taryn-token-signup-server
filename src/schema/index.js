@@ -52,7 +52,8 @@ const typeDefs = `
     sendTokens(address: String!, amount: Int!): Transaction 
     confirmEmail(confirmationToken: String!): User
     createUser(email: String!, ethereumAddress: String!, referrerId: ID): CreateUserPayload
-    payoutTokenGift(id: String!): TokenGift
+    payoutTokenGift(id: String!): ndent
+    TokenGift
   }
 `;
 

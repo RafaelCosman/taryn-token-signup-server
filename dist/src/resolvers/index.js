@@ -27,6 +27,15 @@ var Query = {
       where: { id: data.id }
     });
   },
+  userTokenBalance: function userTokenBalance(_, data) {
+    return _index2.default.User.findOne({
+      where: { ethereumAddress: data.ethereumAddress }
+    }).then(function (user) {
+      return user.getTokenGifts();
+    }).then(function (tokenGifts) {
+      return { count: tokenGifts.length };
+    });
+  },
   allTokenGifts: function allTokenGifts() {
     return _index2.default.TokenGift.findAll({}).then(function (e) {
       return e.map(function (e) {
@@ -78,11 +87,6 @@ var Mutation = {
       return _tokenGift.update({ transactionHash: transaction.id });
     }).then(function (t) {
       return _tokenGift.dataValues;
-    });
-  },
-  createTokenGift: function createTokenGift() {
-    return _index2.default.TokenGift.create({ userId: "dec0ef1c-2fb0-4d96-a98f-60d5e3fe7eaa" }).then(function (result) {
-      return result.dataValues;
     });
   }
 };

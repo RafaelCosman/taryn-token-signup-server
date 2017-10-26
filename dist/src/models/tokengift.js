@@ -13,8 +13,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.UUID,
       allowNull: false
     },
-    transactionHash: DataTypes.STRING,
-    isForReferral: DataTypes.BOOLEAN
+    transactionHash: DataTypes.STRING
   });
   TokenGift.associate = function (models) {
     TokenGift.belongsTo(models.User, { foreignKey: 'userId' });
