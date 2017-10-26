@@ -29,6 +29,7 @@ const typeDefs = `
     TokenGift(id: ID): TokenGift
     allTokenGifts: [TokenGift]
     tokenCount: TokenCountPayload
+    userTokenBalance(ethereumAddress: String!): TokenCountPayload
   }
 
   type ConfirmEmailPayload {
@@ -51,7 +52,6 @@ const typeDefs = `
     sendTokens(address: String!, amount: Int!): Transaction 
     confirmEmail(confirmationToken: String!): User
     createUser(email: String!, ethereumAddress: String!, referrerId: ID): CreateUserPayload
-    createTokenGift: TokenGift
     payoutTokenGift(id: String!): TokenGift
   }
 `;

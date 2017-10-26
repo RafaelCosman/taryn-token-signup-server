@@ -9,9 +9,20 @@ const Query = {
       where: { id: data.id },
     });
   },
+  userTokenBalance: (_, data) => {
+    return db.User.findOne({
+      where: { ethereumAddress: data.ethereumAddress }
+    })
+      .then(user => {
+        return user.getTokenGifts();
+      })
+      .then(tokenGifts => {
+        return ({ count: tokenGifts.length })
+      })
+  },
   allTokenGifts: () => {
     return db.TokenGift.findAll({})
-    .then(e => e.map(e => e.dataValues))
+      .then(e => e.map(e => e.dataValues))
   },
   TokenGift: (_, data) => {
     return db.TokenGift.findOne({
@@ -24,7 +35,7 @@ const Query = {
   },
   tokenCount: (_, data) => {
     return db.TokenGift.findAll({})
-      .then(result => {return { count: result.length }})
+      .then(result => { return { count: result.length } })
   },
 };
 
@@ -38,30 +49,26 @@ const Mutation = {
   createUser: (_, data) => {
     return createUser(data)
   },
-  payoutTokenGift:(_, data) => {
+  payoutTokenGift: (_, data) => {
     let item, _tokenGift, _user;
     return db.TokenGift.findOne({
       where: { id: data.id }
     })
-    .then((tokenGift) => {
-      _tokenGift = tokenGift;
-      return tokenGift.getUser()
-    })
-    .then((user) => {
-      _user = user;
-      return sendTokens({address: user.dataValues.ethereumAddress, amount: 1})
-    })
-    .then((transaction) => {
-      return _tokenGift.update({transactionHash: transaction.id})
-    })
-    .then((t) => {
-      return _tokenGift.dataValues
-    })
+      .then((tokenGift) => {
+        _tokenGift = tokenGift;
+        return tokenGift.getUser()
+      })
+      .then((user) => {
+        _user = user;
+        return sendTokens({ address: user.dataValues.ethereumAddress, amount: 1 })
+      })
+      .then((transaction) => {
+        return _tokenGift.update({ transactionHash: transaction.id })
+      })
+      .then((t) => {
+        return _tokenGift.dataValues
+      })
   },
-  createTokenGift: () => {
-    return db.TokenGift.create({userId: "dec0ef1c-2fb0-4d96-a98f-60d5e3fe7eaa"})
-      .then(result => result.dataValues)
-  }
 }
 
 const resolvers = { Query, Mutation };
