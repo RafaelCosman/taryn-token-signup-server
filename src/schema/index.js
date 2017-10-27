@@ -49,11 +49,10 @@ const typeDefs = `
   }
 
   type Mutation {
-    sendTokens(address: String!, amount: Int!): Transaction 
+    sendTokens(address: String!): Transaction 
     confirmEmail(confirmationToken: String!): User
     createUser(email: String!, ethereumAddress: String!, referrerId: ID): CreateUserPayload
-    payoutTokenGift(id: String!): ndent
-    TokenGift
+    payoutTokenGift(id: String!): TokenGift
   }
 `;
 
