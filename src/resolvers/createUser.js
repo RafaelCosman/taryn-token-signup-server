@@ -11,4 +11,4 @@ const createUser = (user) => {
   })
 }
 
-export default createUser;
+export default createUser;  

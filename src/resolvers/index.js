@@ -36,9 +36,6 @@ const Query = {
 };
 
 const Mutation = {
-  sendTokens: (_, data) => {
-    return sendTokens(data)
-  },
   confirmEmail: (_, { confirmationToken }) => {
     return confirmEmail(confirmationToken)
   },
