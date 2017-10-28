@@ -2,6 +2,7 @@ import db from "../models/index";
 import { confirmEmail } from "./confirmEmail";
 import createUser from "./createUser";
 import sendTokens from "./sendTokens";
+import payoutTokenGift from "./payoutTokenGift"
 
 const Query = {
   User: (_, data) => {
@@ -35,6 +36,17 @@ const Query = {
   },
 };
 
+async function payoutNextTokenGifts() {
+  const tokenGifts = await db.TokenGift.findAll({
+    where: { transactionHash: null },
+    limit: 100,
+  })
+  for (const gift of tokenGifts){
+    await payoutTokenGift(gift)
+  }
+  return tokenGifts 
+}
+
 const Mutation = {
   confirmEmail: (_, { confirmationToken }) => {
     return confirmEmail(confirmationToken)
@@ -43,38 +55,14 @@ const Mutation = {
     return createUser(data)
   },
   payoutTokenGift: (_, data) => {
-    let item, _tokenGift, _user;
     return db.TokenGift.findOne({
       where: { id: data.id }
     })
     .then((tokenGift) => {
-      if (!tokenGift) {
-        throw new Error('TokenGift not found')
-      }
-      if (!!tokenGift.transactionHash){
-        throw new Error('TokenGift has already been paid for')
-      } else {
-        _tokenGift = tokenGift;
-        return tokenGift.getUser()
-      }
-    })
-    .then((user) => {
-      if (!user) {
-        throw new Error('No user found for tokenGift')
-      }
-      _user = user;
-      return sendTokens({ address: user.dataValues.ethereumAddress, amount: 1 })
-    })
-    .then((transaction) => {
-      if (!transaction) {
-        throw new Error('No transaction created, see logs')
-      }
-      return _tokenGift.update({ transactionHash: transaction.id })
-    })
-    .then((t) => {
-      return _tokenGift
+      return payoutTokenGift(tokenGift)
     })
   },
+  payoutNextTokenGifts,
 }
 
 const resolvers = { Query, Mutation };

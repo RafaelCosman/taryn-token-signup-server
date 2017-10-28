@@ -18,14 +18,17 @@ const account = web3.eth.accounts.wallet.add(secretKey)
 const abi = _Token
 const contract = new web3.eth.Contract(abi, contractAddress)
 
-const foo = ethUtil.privateToAddress(secretKey);
-console.log(account.address)
-
-module.exports = function sendTokens(data) {
+module.exports = function sendTokens(data, index) {
     const {address, amount} = data;
+    const gasPrice = 13000000000;
+    const gas = 1000000
+
     return new Promise((resolve, reject) => {
-        contract.methods.mint(address, 1).send({from: account.address,  gas: 1000000, gasPrice: "13000000000"}).then(transaction => {
-            resolve({id: transaction.transactionHash})
+        return contract.methods.mint(address, 1).send({from: account.address, gas, gasPrice: gasPrice.toString()})
+        .on('transactionHash',(transactionHash) => {
+            resolve({id: transactionHash}) 
         })
-    }) 
+        .on('error', function(error){ reject(error) })
+        .catch(error => reject(error))
+    })
 }
