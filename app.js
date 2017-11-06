@@ -1,3 +1,5 @@
+require('babel-polyfill');
+
 const express = require('express');
 
 // This package automatically parses JSON requests.
