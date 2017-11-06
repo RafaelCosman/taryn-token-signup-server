@@ -10,6 +10,7 @@ const {graphqlExpress, graphiqlExpress} = require('apollo-server-express');
 var cors = require('cors');
 const schema = require('./src/schema');
 var app = express();
+console.log(schema)
 
 app.use(cors())
 app.use('/graphiql', graphiqlExpress({
