@@ -6,12 +6,8 @@ const typeDefs = `
   type User {
     id: ID! 
     email: String!
-    confirmationToken: String
     hasConfirmedEmail: Boolean
-    ethereumAddress: String!
     tokenCount: Int!
-    friendsReferred: [User!]!
-    referrer: User
   }
 
   type TokenGift {
