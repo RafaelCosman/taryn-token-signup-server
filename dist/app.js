@@ -14,6 +14,7 @@ var _require = require('apollo-server-express'),
 var cors = require('cors');
 var schema = require('./src/schema');
 var app = express();
+console.log(schema);
 
 app.use(cors());
 app.use('/graphiql', graphiqlExpress({

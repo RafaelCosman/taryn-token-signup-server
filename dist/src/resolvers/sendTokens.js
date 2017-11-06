@@ -1,27 +1,39 @@
 "use strict";
 
-// const Web3 = require('web3');
-// const _Token = require("../Token.json");
+var Web3 = require('web3');
+var _Token = require("../Token.json");
 
-// const secretKey = process.env.SECRET_KEY;
-// const contractAddress = process.env.CONTRACT_ADDRESS;
-// const providerUrl = process.env.PROVIDER_URL;
-// const Promise = require("es6-promise").Promise
+var ethUtil = require("ethereumjs-util");
+var secretKey = process.env.SECRET_KEY;
+var contractAddress = process.env.CONTRACT_ADDRESS;
+var providerUrl = process.env.PROVIDER_URL;
+var Promise = require("es6-promise").Promise;
 
-// const provider = new Web3.providers.HttpProvider(providerUrl)
+var provider = new Web3.providers.HttpProvider(providerUrl);
 
-// const web3 = new Web3(provider)
+var web3 = new Web3(provider);
 
-// const account = web3.eth.accounts.wallet.add(secretKey)
-// const abi = _Token
-// const contract = new web3.eth.Contract(abi, contractAddress)
+// Note to self:
+// Remember that secret key should begin with 0x.
+// If you just got it from metamask, add an 0x to it.
+var account = web3.eth.accounts.wallet.add(secretKey);
+var abi = _Token;
+var contract = new web3.eth.Contract(abi, contractAddress);
 
-module.exports = function sendTokens(data) {
-    // const {address, amount} = data;
-    // return new Promise((resolve, reject) => {
-    //     contract.methods.sendCoin(address, amount).send({from: account.address,  gas: 100000}).then(transaction => {
-    //         resolve({id: transaction.transactionHash})
-    //     })
-    //     .catch(e => {console.log("Error", e)})
-    // }) 
+module.exports = function sendTokens(data, index) {
+    var address = data.address,
+        amount = data.amount;
+
+    var gasPrice = 10000000000;
+    var gas = 1000000;
+
+    return new Promise(function (resolve, reject) {
+        return contract.methods.mint(address, 1).send({ from: account.address, gas: gas, gasPrice: gasPrice.toString() }).on('transactionHash', function (transactionHash) {
+            resolve({ id: transactionHash });
+        }).on('error', function (error) {
+            reject(error);
+        }).catch(function (error) {
+            return reject(error);
+        });
+    });
 };
