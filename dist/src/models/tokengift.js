@@ -1,7 +1,7 @@
 'use strict';
 
-const Sequelize = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+var Sequelize = require('sequelize');
+module.exports = function (sequelize, DataTypes) {
   var TokenGift = sequelize.define('TokenGift', {
     id: {
       type: DataTypes.UUID(),

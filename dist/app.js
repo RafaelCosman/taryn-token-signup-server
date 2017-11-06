@@ -1,14 +1,21 @@
-const express = require('express');
+'use strict';
+
+require("babel-core/register");
+require('babel-polyfill');
+
+var express = require('express');
 
 // This package automatically parses JSON requests.
-const bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
 
-const dotenv = require('dotenv').config();
+var dotenv = require('dotenv').config();
 
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+var _require = require('apollo-server-express'),
+    graphqlExpress = _require.graphqlExpress,
+    graphiqlExpress = _require.graphiqlExpress;
 
 var cors = require('cors');
-const schema = require('./src/schema');
+var schema = require('./src/schema');
 var app = express();
 console.log(schema);
 
@@ -17,6 +24,6 @@ app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql'
 }));
 
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
 
-app.listen(process.env.PORT, () => {});
+app.listen(process.env.PORT, function () {});
