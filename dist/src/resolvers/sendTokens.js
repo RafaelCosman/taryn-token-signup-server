@@ -1,39 +1,33 @@
-"use strict";
+const Web3 = require('web3');
+const _Token = require("../Token.json");
 
-var Web3 = require('web3');
-var _Token = require("../Token.json");
+const ethUtil = require("ethereumjs-util");
+const secretKey = process.env.SECRET_KEY;
+const contractAddress = process.env.CONTRACT_ADDRESS;
+const providerUrl = process.env.PROVIDER_URL;
+const Promise = require("es6-promise").Promise;
 
-var ethUtil = require("ethereumjs-util");
-var secretKey = process.env.SECRET_KEY;
-var contractAddress = process.env.CONTRACT_ADDRESS;
-var providerUrl = process.env.PROVIDER_URL;
-var Promise = require("es6-promise").Promise;
+const provider = new Web3.providers.HttpProvider(providerUrl);
 
-var provider = new Web3.providers.HttpProvider(providerUrl);
-
-var web3 = new Web3(provider);
+const web3 = new Web3(provider);
 
 // Note to self:
 // Remember that secret key should begin with 0x.
 // If you just got it from metamask, add an 0x to it.
-var account = web3.eth.accounts.wallet.add(secretKey);
-var abi = _Token;
-var contract = new web3.eth.Contract(abi, contractAddress);
+const account = web3.eth.accounts.wallet.add(secretKey);
+const abi = _Token;
+const contract = new web3.eth.Contract(abi, contractAddress);
 
 module.exports = function sendTokens(data, index) {
-    var address = data.address,
-        amount = data.amount;
+    const { address, amount } = data;
+    const gasPrice = 10000000000;
+    const gas = 1000000;
 
-    var gasPrice = 10000000000;
-    var gas = 1000000;
-
-    return new Promise(function (resolve, reject) {
-        return contract.methods.mint(address, 1).send({ from: account.address, gas: gas, gasPrice: gasPrice.toString() }).on('transactionHash', function (transactionHash) {
+    return new Promise((resolve, reject) => {
+        return contract.methods.mint(address, 1).send({ from: account.address, gas, gasPrice: gasPrice.toString() }).on('transactionHash', transactionHash => {
             resolve({ id: transactionHash });
         }).on('error', function (error) {
             reject(error);
-        }).catch(function (error) {
-            return reject(error);
-        });
+        }).catch(error => reject(error));
     });
 };

@@ -1,19 +1,12 @@
-"use strict";
+const db = require("../models/index");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var db = require("../models/index");
-
-var createUser = function createUser(user) {
-  return new Promise(function (resolve, reject) {
-    db.User.create(user).then(function (user) {
-      return resolve(user.dataValues);
-    }).catch(function (error) {
+const createUser = user => {
+  return new Promise((resolve, reject) => {
+    db.User.create(user).then(user => resolve(user.dataValues)).catch(error => {
       console.error(error);
       reject("User email or ethereum address not unique.");
     });
   });
 };
 
-exports.default = createUser;
+export default createUser;

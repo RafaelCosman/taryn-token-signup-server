@@ -1,29 +1,20 @@
-"use strict";
+const db = require("../models/index");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var db = require("../models/index");
-
-var getUserByConfirmationToken = function getUserByConfirmationToken(confirmationToken) {
+const getUserByConfirmationToken = confirmationToken => {
   return db.User.findOne({
-    where: { confirmationToken: confirmationToken }
+    where: { confirmationToken }
   });
 };
 
-var confirmEmail = function confirmEmail(confirmationToken) {
-  return new Promise(function (resolve, reject) {
-    var user = void 0;
-    getUserByConfirmationToken(confirmationToken).then(function (u) {
+const confirmEmail = confirmationToken => {
+  return new Promise((resolve, reject) => {
+    let user;
+    getUserByConfirmationToken(confirmationToken).then(u => {
       user = u;return u.createTokenGift();
-    }).then(function (tokenGift) {
-      return user.update({ hasConfirmedEmail: true, confirmationToken: null });
-    }).then(function (tokenGift) {
+    }).then(tokenGift => user.update({ hasConfirmedEmail: true, confirmationToken: null })).then(tokenGift => {
       console.log(user.dataValues);resolve(user.dataValues);
-    }).catch(function (error) {
-      return reject("Invalid confirmation token.");
-    });
+    }).catch(error => reject("Invalid confirmation token."));
   });
 };
 
-exports.confirmEmail = confirmEmail;
+export { confirmEmail };

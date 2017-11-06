@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  up: function up(queryInterface, Sequelize) {
+  up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('TokenGifts', {
       id: {
         allowNull: false,
@@ -35,7 +35,7 @@ module.exports = {
       }
     });
   },
-  down: function down(queryInterface, Sequelize) {
+  down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('TokenGifts');
   }
 };

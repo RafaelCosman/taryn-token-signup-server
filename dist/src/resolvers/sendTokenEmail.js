@@ -1,17 +1,12 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var crypto = require('crypto');
-var sgMail = require('@sendgrid/mail');
+const crypto = require('crypto');
+const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 sgMail.setSubstitutionWrappers('{{', '}}');
-var TEMPLATE_ID = '43459f31-7286-4281-8958-c9ad910a7738';
+const TEMPLATE_ID = '43459f31-7286-4281-8958-c9ad910a7738';
 
-var sendTokenEmail = function sendTokenEmail(user) {
-  var msg = {
+const sendTokenEmail = user => {
+  const msg = {
     to: user.email,
     from: 'noreply@trusttoken.com',
     subject: 'Your Taryl Token has been Minted',
@@ -26,4 +21,4 @@ var sendTokenEmail = function sendTokenEmail(user) {
   sgMail.send(msg);
 };
 
-exports.default = sendTokenEmail;
+export default sendTokenEmail;

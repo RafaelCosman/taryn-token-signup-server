@@ -1,22 +1,15 @@
-'use strict';
-
-var _index = require('./index');
-
-var _index2 = _interopRequireDefault(_index);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var crypto = require('crypto');
-var sgMail = require('@sendgrid/mail');
+import db from "./index";
+const crypto = require('crypto');
+const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-var sendConfirmationEmail = function sendConfirmationEmail(user) {
-  var subject = "Confirm your email and redeem your FreeToken";
-  var confirmationUrl = process.env.CLIENT_URL + '/confirm/' + user.confirmationToken;
-  var body = 'Click this link to confirm your email: ' + confirmationUrl;
+const sendConfirmationEmail = user => {
+  const subject = "Confirm your email and redeem your FreeToken";
+  const confirmationUrl = `${process.env.CLIENT_URL}/confirm/${user.confirmationToken}`;
+  const body = `Click this link to confirm your email: ${confirmationUrl}`;
 
-  var message = {
+  const message = {
     to: user.email,
     from: "noreply@trusttoken.com",
     subject: "Confirm your email and receieve your token!",
@@ -25,8 +18,8 @@ var sendConfirmationEmail = function sendConfirmationEmail(user) {
   sgMail.send(message);
 };
 
-var Sequelize = require('sequelize');
-module.exports = function (sequelize, DataTypes) {
+const Sequelize = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
     id: {
       type: DataTypes.UUID(),
@@ -40,15 +33,15 @@ module.exports = function (sequelize, DataTypes) {
     ethereumAddress: DataTypes.STRING
   }, {
     hooks: {
-      beforeCreate: function beforeCreate(user, options) {
+      beforeCreate: (user, options) => {
         user.confirmationToken = crypto.randomBytes(20).toString("hex");
       },
-      afterCreate: function afterCreate(user, options) {
+      afterCreate: (user, options) => {
         sendConfirmationEmail(user);
       }
     },
     classMethods: {
-      associate: function associate(models) {}
+      associate: function (models) {}
     }
   });
   User.associate = function (models) {
