@@ -1,5 +1,7 @@
 'use strict';
 
+require('babel-polyfill');
+
 var express = require('express');
 
 // This package automatically parses JSON requests.
