@@ -11,6 +11,6 @@ module.exports = async function payoutTokenGift(tokenGift, index=0) {
     const transaction = await sendTokens({ address: user.dataValues.ethereumAddress, amount: 1 }, index)
     let _updatedTokenGift = await tokenGift.update({ transactionHash: transaction.id })
     console.log("Successfully created transaction with tokengift: ", _updatedTokenGift)
-    await sendTokenEmail(user);
+    await sendTokenEmail(user, transaction.id);
     return _updatedTokenGift 
 }

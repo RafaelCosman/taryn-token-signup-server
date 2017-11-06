@@ -69,7 +69,7 @@ module.exports = function () {
 
                         console.log("Successfully created transaction with tokengift: ", _updatedTokenGift);
                         _context.next = 18;
-                        return (0, _sendTokenEmail2.default)(user);
+                        return (0, _sendTokenEmail2.default)(user, transaction.id);
 
                     case 18:
                         return _context.abrupt("return", _updatedTokenGift);
