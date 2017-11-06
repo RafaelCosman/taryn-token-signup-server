@@ -20,7 +20,7 @@ const contract = new web3.eth.Contract(abi, contractAddress)
 
 module.exports = function sendTokens(data, index) {
     const {address, amount} = data;
-    const gasPrice = 13000000000;
+    const gasPrice = 10000000000;
     const gas = 1000000
 
     return new Promise((resolve, reject) => {

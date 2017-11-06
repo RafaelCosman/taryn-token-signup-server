@@ -62,7 +62,7 @@ const Mutation = {
       return payoutTokenGift(tokenGift)
     })
   },
-  payoutNextTokenGifts,
+  payoutNextTokenGifts
 }
 
 const resolvers = { Query, Mutation };
