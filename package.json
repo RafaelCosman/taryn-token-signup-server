@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "babel-node src/app.js",
-    "production:start": "node ./dist/app.js",
+    "production:start": "node ./dist/src/app.js",
     "inspect": "babel-node app.js --inspect-brk",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "payoutNextTokenGifts": "node_modules/.bin/babel-node src/payoutNextTokenGifts.js",
