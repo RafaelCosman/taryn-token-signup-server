@@ -39,7 +39,7 @@ const Query = {
 async function payoutNextTokenGifts() {
   const tokenGifts = await db.TokenGift.findAll({
     where: { transactionHash: null },
-    limit: 100,
+    limit: 20,
   })
   for (const gift of tokenGifts){
     await payoutTokenGift(gift)

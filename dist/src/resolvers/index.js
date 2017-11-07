@@ -16,7 +16,7 @@ var payoutNextTokenGifts = function () {
             _context.next = 2;
             return _index2.default.TokenGift.findAll({
               where: { transactionHash: null },
-              limit: 100
+              limit: 20
             });
 
           case 2:

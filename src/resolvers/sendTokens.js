@@ -26,7 +26,8 @@ module.exports = function sendTokens(data, index) {
     return new Promise((resolve, reject) => {
         return contract.methods.mint(address, 1).send({from: account.address, gas, gasPrice: gasPrice.toString()})
         .then((transaction) => {
-            resolve({id: transaction.transactionHash}) 
+            console.log("Got transaction", transaction);
+            setTimeout(() => {resolve({id: transaction.transactionHash})}, 60000)
         })
         .catch(error => reject(error))
     })
