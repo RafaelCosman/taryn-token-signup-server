@@ -27,4 +27,6 @@ app.use('/graphiql', graphiqlExpress({
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
 
-app.listen(process.env.PORT, function () {});
+//Todo: Fix this hack. This was put because payoutNextTokenGifts took forever.
+var server = app.listen(process.env.PORT, function () {});
+server.setTimeout(20 * 60 * 1000);
