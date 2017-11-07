@@ -15,7 +15,7 @@ var _require = require('apollo-server-express'),
     graphiqlExpress = _require.graphiqlExpress;
 
 var cors = require('cors');
-var schema = require('./src/schema');
+var schema = require('./schema');
 var app = express();
 
 console.log('Starting with contractAddress: ' + process.env.CONTRACT_ADDRESS + ' and providerUrl: ' + process.env.PROVIDER_URL);

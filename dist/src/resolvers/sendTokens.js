@@ -29,10 +29,7 @@ module.exports = function sendTokens(data, index) {
 
     return new Promise(function (resolve, reject) {
         return contract.methods.mint(address, 1).send({ from: account.address, gas: gas, gasPrice: gasPrice.toString() }).then(function (transaction) {
-            console.log("Got transaction", transaction);
-            setTimeout(function () {
-                resolve({ id: transaction.transactionHash });
-            }, 60000);
+            resolve({ id: transaction.transactionHash });
         }).catch(function (error) {
             return reject(error);
         });

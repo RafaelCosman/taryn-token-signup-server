@@ -11,7 +11,7 @@ const dotenv = require('dotenv').config();
 const {graphqlExpress, graphiqlExpress} = require('apollo-server-express');
 
 var cors = require('cors');
-const schema = require('./src/schema');
+const schema = require('./schema');
 var app = express();
 
 console.log(`Starting with contractAddress: ${process.env.CONTRACT_ADDRESS} and providerUrl: ${process.env.PROVIDER_URL}`)
