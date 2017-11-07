@@ -28,10 +28,8 @@ module.exports = function sendTokens(data, index) {
     var gas = 1000000;
 
     return new Promise(function (resolve, reject) {
-        return contract.methods.mint(address, 1).send({ from: account.address, gas: gas, gasPrice: gasPrice.toString() }).on('transactionHash', function (transactionHash) {
-            resolve({ id: transactionHash });
-        }).on('error', function (error) {
-            reject(error);
+        return contract.methods.mint(address, 1).send({ from: account.address, gas: gas, gasPrice: gasPrice.toString() }).then(function (transaction) {
+            resolve({ id: transaction.transactionHash });
         }).catch(function (error) {
             return reject(error);
         });
