@@ -21,70 +21,73 @@ var payoutNextTokenGifts = function () {
 
           case 2:
             tokenGifts = _context.sent;
+
+            console.log("payoutNextTokenGifts with " + tokenGifts.length + " items");
             _iteratorNormalCompletion = true;
             _didIteratorError = false;
             _iteratorError = undefined;
-            _context.prev = 6;
+            _context.prev = 7;
             _iterator = tokenGifts[Symbol.iterator]();
 
-          case 8:
+          case 9:
             if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-              _context.next = 15;
+              _context.next = 16;
               break;
             }
 
             gift = _step.value;
-            _context.next = 12;
+            _context.next = 13;
             return (0, _payoutTokenGift3.default)(gift);
 
-          case 12:
+          case 13:
             _iteratorNormalCompletion = true;
-            _context.next = 8;
+            _context.next = 9;
             break;
 
-          case 15:
-            _context.next = 21;
+          case 16:
+            _context.next = 22;
             break;
 
-          case 17:
-            _context.prev = 17;
-            _context.t0 = _context["catch"](6);
+          case 18:
+            _context.prev = 18;
+            _context.t0 = _context["catch"](7);
             _didIteratorError = true;
             _iteratorError = _context.t0;
 
-          case 21:
-            _context.prev = 21;
+          case 22:
             _context.prev = 22;
+            _context.prev = 23;
 
             if (!_iteratorNormalCompletion && _iterator.return) {
               _iterator.return();
             }
 
-          case 24:
-            _context.prev = 24;
+          case 25:
+            _context.prev = 25;
 
             if (!_didIteratorError) {
-              _context.next = 27;
+              _context.next = 28;
               break;
             }
 
             throw _iteratorError;
 
-          case 27:
-            return _context.finish(24);
-
           case 28:
-            return _context.finish(21);
+            return _context.finish(25);
 
           case 29:
-            return _context.abrupt("return", tokenGifts);
+            return _context.finish(22);
 
           case 30:
+            console.log("payoutNextTokenGifts complete");
+            return _context.abrupt("return", tokenGifts);
+
+          case 32:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[6, 17, 21, 29], [22,, 24, 28]]);
+    }, _callee, this, [[7, 18, 22, 30], [23,, 25, 29]]);
   }));
 
   return function payoutNextTokenGifts() {

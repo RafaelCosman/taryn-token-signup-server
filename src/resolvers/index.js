@@ -41,9 +41,11 @@ async function payoutNextTokenGifts() {
     where: { transactionHash: null },
     limit: 20,
   })
+  console.log(`payoutNextTokenGifts with ${tokenGifts.length} items`)
   for (const gift of tokenGifts){
     await payoutTokenGift(gift)
   }
+  console.log(`payoutNextTokenGifts complete`)
   return tokenGifts 
 }
 

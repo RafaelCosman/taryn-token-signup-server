@@ -8,6 +8,7 @@
     "production:start": "node ./dist/app.js",
     "inspect": "babel-node app.js --inspect-brk",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "payoutNextTokenGifts": "babel-node src/payoutNextTokenGifts.js",
     "db:create": "node_modules/.bin/create_database",
     "db:drop": "node_modules/.bin/drop_database",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
