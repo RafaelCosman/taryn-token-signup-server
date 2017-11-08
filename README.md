@@ -9,7 +9,7 @@ npm install
 npm run start
 ```
 
-### Necessary environment variables:  
+### Necessary environment variables
 
 **CLIENT_URL**: Url of the client application, i.e "http://localhost:3000"  
 **SENDGRID_API_KEY**: Sendgrid API  
